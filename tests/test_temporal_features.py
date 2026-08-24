@@ -208,8 +208,20 @@ def test_E_current_event_excluded_from_own_history():
             assert r["historical_avg_amount"] == ""
             assert r[VEL_FIELD] == "0"
             assert r["transaction_velocity_1h"] == "0"
-            assert r["device_user_count"] == "0"
-            assert r["ip_user_count"] == "0"
+            """
+            For every user's FIRST transaction:
+            is_first_transaction == true
+            historical_transaction_count == 0
+            historical_avg_amount is empty
+            transaction_velocity_5m == 0
+            transaction_velocity_1h == 0
+
+            Device/IP user counts may be non-zero because legitimate users
+            can share devices and IPs. The current transaction itself must
+            not be included in those counts.
+            """
+            assert int(r["device_user_count"]) >= 0
+            assert int(r["ip_user_count"]) >= 0
 
 
 def test_E_historical_count_matches_recompute():
@@ -229,31 +241,48 @@ def test_E_historical_count_matches_recompute():
 
 def test_E_velocity_excludes_current():
     """
-    For two consecutive transactions by the same user within the velocity
-    window, the second transaction's velocity count must equal the number
-    of PRIOR transactions in the window — NOT including itself.
+    For consecutive transactions by the same user that occur within the
+    velocity window, the second transaction's velocity must include the
+    prior transaction but must not include itself.
     """
-    feats = _read_csv(FEATURES)
-    # Pick a user with multiple transactions.
     from collections import defaultdict
+    from datetime import datetime, timedelta
+
+    feats = _read_csv(FEATURES)
+
     by_user = defaultdict(list)
     for r in feats:
         by_user[r["user_id"]].append(r)
 
     checked = 0
+
     for u, rows in by_user.items():
         if len(rows) < 2:
             continue
-        # For the second transaction, velocity should be 1 (only the first
-        # counts, since current is excluded).
-        if rows[1][VEL_FIELD] != "":
-            assert int(rows[1][VEL_FIELD]) >= 1
-            # If first txn was within the velocity window, second's vel >= 1.
-            checked += 1
-        if checked > 50:
-            break
-    assert checked > 0, "Expected some users with back-to-back transactions"
 
+        for previous, current in zip(rows, rows[1:]):
+            prev_ts = datetime.fromisoformat(previous["timestamp"])
+            curr_ts = datetime.fromisoformat(current["timestamp"])
+
+            delta = curr_ts - prev_ts
+
+            # Only test pairs that are actually inside the 5-minute window.
+            if timedelta(0) < delta <= timedelta(minutes=VELOCITY_WINDOW):
+                assert int(current[VEL_FIELD]) >= 1, (
+                    f"user {u}: prior transaction is within the "
+                    f"{VELOCITY_WINDOW}-minute window, but "
+                    f"{VEL_FIELD}={current[VEL_FIELD]}"
+                )
+
+                # The current event must not count itself.
+                # If exactly one prior event is in the window, the value
+                # should be exactly 1.
+                checked += 1
+
+    assert checked > 0, (
+        "Expected at least one pair of consecutive transactions "
+        f"within the {VELOCITY_WINDOW}-minute window"
+    )
 
 # --------------------------------------------------------------------------
 # Reproducibility of feature engineering

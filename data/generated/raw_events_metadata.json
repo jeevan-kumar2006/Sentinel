@@ -1,0 +1,94 @@
+{
+  "generation_params": {
+    "rows_requested": 2000,
+    "seed": 123,
+    "fraud_rate_requested": 0.04,
+    "warmup_days": 90,
+    "attack_days": 14
+  },
+  "actual_counts": {
+    "total_rows": 2000,
+    "fraud": 80,
+    "legitimate": 1920,
+    "actual_fraud_rate": 0.04
+  },
+  "entities": {
+    "unique_users": 1129,
+    "unique_devices": 1224,
+    "unique_ips": 1166,
+    "unique_merchants": 240,
+    "legitimate_shared_devices": 168,
+    "legitimate_shared_ips": 210
+  },
+  "timeline": {
+    "start": "2024-01-01T00:00:00+00:00",
+    "end": "2024-04-14T00:00:00+00:00",
+    "warmup_start": "2024-01-01T00:00:00+00:00",
+    "warmup_end": "2024-03-31T00:00:00+00:00",
+    "attack_start": "2024-03-31T00:00:00+00:00",
+    "attack_end": "2024-04-14T00:00:00+00:00",
+    "warmup_duration_days": 90,
+    "attack_duration_days": 14
+  },
+  "fraud_scenario_distribution": {
+    "device_velocity": {
+      "count": 14,
+      "percentage": 0.007
+    },
+    "account_velocity": {
+      "count": 14,
+      "percentage": 0.007
+    },
+    "ip_concentration": {
+      "count": 12,
+      "percentage": 0.006
+    },
+    "amount_anomaly": {
+      "count": 12,
+      "percentage": 0.006
+    },
+    "geo_anomaly": {
+      "count": 12,
+      "percentage": 0.006
+    },
+    "combined": {
+      "count": 16,
+      "percentage": 0.008
+    },
+    "none": {
+      "count": 1920,
+      "percentage": 0.96
+    }
+  },
+  "amounts": {
+    "mean": 3461.35,
+    "median": 1551.53,
+    "std": 29654.8,
+    "min": 52.47,
+    "max": 1194842.01
+  },
+  "schema": [
+    "transaction_id",
+    "timestamp",
+    "user_id",
+    "merchant_id",
+    "device_fingerprint",
+    "ip_address",
+    "payment_method",
+    "transaction_amount",
+    "currency",
+    "latitude",
+    "longitude",
+    "transaction_status",
+    "account_creation_timestamp",
+    "payment_attempt_number",
+    "transaction_type",
+    "is_fraud",
+    "fraud_scenario"
+  ],
+  "notes": [
+    "All identifiers are opaque UUID-derived tokens.",
+    "fraud_scenario is metadata for validation only; it must not be used as a model feature.",
+    "Fraud prevalence is a synthetic benchmark prevalence, not a real-world or Razorpay fraud prevalence."
+  ]
+}

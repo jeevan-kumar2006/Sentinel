@@ -76,6 +76,9 @@ def engineer(rows: List[Dict], velocity_window_min: int) -> Tuple[List[Dict], Di
         ip_users[ip]         = set of user_ids seen so far
     """
     user_history: Dict[str, Deque[Tuple[datetime, float, str]]] = defaultdict(deque)
+    user_total_count: Dict[str, int] = defaultdict(int)
+    user_total_amount: Dict[str, float] = defaultdict(float)
+    user_last_txn: Dict[str, Tuple[datetime, float]] = {}
     user_devices: Dict[str, set] = defaultdict(set)
     user_ips: Dict[str, set] = defaultdict(set)
     user_last_loc: Dict[str, Tuple[datetime, float, float]] = {}
@@ -102,17 +105,16 @@ def engineer(rows: List[Dict], velocity_window_min: int) -> Tuple[List[Dict], Di
         lon = r["longitude"]
 
         hist = user_history[user]
-        hist_count = len(hist)
+        hist_count = user_total_count[user]
 
         # --- Cold-start flags ---
         is_first = hist_count == 0
         has_hist_amount = hist_count > 0
         has_prev_loc = user in user_last_loc
 
-        # --- Historical amount features (strictly previous transactions) ---
+        # --- Historical amount features (all strictly previous transactions) ---
         if has_hist_amount:
-            amounts_so_far = [h[1] for h in hist]
-            hist_avg_amount = sum(amounts_so_far) / len(amounts_so_far)
+            hist_avg_amount = user_total_amount[user] / user_total_count[user]
             amount_ratio = amount / hist_avg_amount if hist_avg_amount > 0 else None
         else:
             hist_avg_amount = None
@@ -135,8 +137,9 @@ def engineer(rows: List[Dict], velocity_window_min: int) -> Tuple[List[Dict], Di
                 vel_1h += 1
 
         # --- Time since previous transaction ---
-        if hist:
-            time_since_prev = (ts - hist[-1][0]).total_seconds()
+        if user in user_last_txn:
+            prev_ts, _prev_amount = user_last_txn[user]
+            time_since_prev = (ts - prev_ts).total_seconds()
         else:
             time_since_prev = None
 
@@ -212,12 +215,20 @@ def engineer(rows: List[Dict], velocity_window_min: int) -> Tuple[List[Dict], Di
         feature_rows.append(feature_row)
 
         # --- Update state AFTER computing features for current transaction ---
+        # --- Update state AFTER computing features for current transaction ---
         hist.append((ts, amount, status))
+
+        user_total_count[user] += 1
+        user_total_amount[user] += amount
+        user_last_txn[user] = (ts, amount)
+
         user_devices[user].add(device)
         user_ips[user].add(ip)
         user_last_loc[user] = (ts, lat, lon)
+
         if status == "failed":
             user_failed[user].append(ts)
+
         device_users[device].add(user)
         ip_users[ip].add(user)
 

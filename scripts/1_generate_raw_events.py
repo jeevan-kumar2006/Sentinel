@@ -411,7 +411,7 @@ def inject_device_velocity(rng: random.Random, txns: List[Dict],
         device = gen_device_id(rng)
         ip = gen_ip(rng)
         # 1-3 distinct IPs for the burst (some natural rotation).
-        ips_pool = [ip] + ([gen_ip(rng)] for _ in range(rng.randint(0, 2)))
+        ips_pool = [ip] + [gen_ip(rng) for _ in range(rng.randint(0, 2))]
         users, _, _ = _new_fraud_entities(rng, burst_size, 0, 0)
 
         for i in range(burst_size):
