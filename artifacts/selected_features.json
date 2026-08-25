@@ -1,0 +1,23 @@
+[
+  "transaction_amount",
+  "latitude",
+  "longitude",
+  "payment_attempt_number",
+  "is_first_transaction",
+  "has_historical_amount",
+  "has_previous_location",
+  "historical_transaction_count",
+  "historical_avg_amount",
+  "amount_ratio_to_history",
+  "transaction_velocity_5m",
+  "transaction_velocity_1h",
+  "time_since_previous_transaction",
+  "unique_devices_seen_before",
+  "unique_ips_seen_before",
+  "device_user_count",
+  "ip_user_count",
+  "failed_attempt_velocity",
+  "geographic_distance_from_previous",
+  "geographic_velocity",
+  "account_age_seconds"
+]
