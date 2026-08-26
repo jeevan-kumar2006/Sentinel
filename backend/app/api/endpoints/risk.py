@@ -6,17 +6,18 @@ from backend.app.services.reason_service import generate_reasons
 
 router = APIRouter()
 
+
 @router.post("/risk/score", response_model=RiskScoreResponse)
 async def score_transaction(request: RiskScoreRequest):
-    data = request.dict()
-    txn_id = data.pop('transaction_id', None)
-    
+    data = request.model_dump()
+    txn_id = data.pop("transaction_id", None)
+
     # Convert to DataFrame for preprocessor
     features_df = pd.DataFrame([data])
-    
+
     prob, score, decision = model_service.predict(features_df)
     reasons = generate_reasons(data)
-    
+
     return RiskScoreResponse(
         transaction_id=txn_id,
         risk_probability=prob,
