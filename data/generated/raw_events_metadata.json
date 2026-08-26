@@ -1,22 +1,22 @@
 {
   "generation_params": {
-    "rows_requested": 2000,
-    "seed": 123,
+    "rows_requested": 5000,
+    "seed": 42,
     "fraud_rate_requested": 0.04,
     "warmup_days": 90,
     "attack_days": 14
   },
   "actual_counts": {
-    "total_rows": 2000,
-    "fraud": 80,
-    "legitimate": 1920,
+    "total_rows": 5000,
+    "fraud": 200,
+    "legitimate": 4800,
     "actual_fraud_rate": 0.04
   },
   "entities": {
-    "unique_users": 1129,
-    "unique_devices": 1224,
-    "unique_ips": 1166,
-    "unique_merchants": 240,
+    "unique_users": 1461,
+    "unique_devices": 1798,
+    "unique_ips": 1719,
+    "unique_merchants": 360,
     "legitimate_shared_devices": 168,
     "legitimate_shared_ips": 210
   },
@@ -32,40 +32,40 @@
   },
   "fraud_scenario_distribution": {
     "device_velocity": {
-      "count": 14,
-      "percentage": 0.007
+      "count": 36,
+      "percentage": 0.0072
     },
     "account_velocity": {
-      "count": 14,
-      "percentage": 0.007
+      "count": 36,
+      "percentage": 0.0072
     },
     "ip_concentration": {
-      "count": 12,
+      "count": 30,
       "percentage": 0.006
     },
     "amount_anomaly": {
-      "count": 12,
+      "count": 30,
       "percentage": 0.006
     },
     "geo_anomaly": {
-      "count": 12,
+      "count": 30,
       "percentage": 0.006
     },
     "combined": {
-      "count": 16,
-      "percentage": 0.008
+      "count": 38,
+      "percentage": 0.0076
     },
     "none": {
-      "count": 1920,
+      "count": 4800,
       "percentage": 0.96
     }
   },
   "amounts": {
-    "mean": 3461.35,
-    "median": 1551.53,
-    "std": 29654.8,
-    "min": 52.47,
-    "max": 1194842.01
+    "mean": 3966.63,
+    "median": 1535.14,
+    "std": 32050.04,
+    "min": 50.36,
+    "max": 1192734.8
   },
   "schema": [
     "transaction_id",

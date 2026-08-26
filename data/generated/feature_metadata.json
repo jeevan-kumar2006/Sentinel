@@ -1,242 +1,257 @@
 {
-  "transaction_id": {
-    "description": "Opaque UUID transaction identifier.",
-    "dtype": "string",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "timestamp": {
-    "description": "ISO-8601 UTC transaction timestamp.",
-    "dtype": "datetime",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "user_id": {
-    "description": "Opaque user identifier.",
-    "dtype": "string",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "merchant_id": {
-    "description": "Opaque merchant identifier.",
-    "dtype": "string",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "device_fingerprint": {
-    "description": "Opaque device fingerprint.",
-    "dtype": "string",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "ip_address": {
-    "description": "IPv4 address (opaque).",
-    "dtype": "string",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "payment_method": {
-    "description": "Payment instrument type.",
-    "dtype": "categorical",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "transaction_amount": {
-    "description": "Transaction amount in the given currency.",
-    "dtype": "float",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "currency": {
-    "description": "ISO currency code.",
-    "dtype": "categorical",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "latitude": {
-    "description": "Latitude of the transaction origin.",
-    "dtype": "float",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "longitude": {
-    "description": "Longitude of the transaction origin.",
-    "dtype": "float",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "transaction_status": {
-    "description": "Terminal status: success / failed / pending.",
-    "dtype": "categorical",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "account_creation_timestamp": {
-    "description": "ISO-8601 UTC account creation time.",
-    "dtype": "datetime",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "payment_attempt_number": {
-    "description": "Attempt index for this payment (1-based).",
-    "dtype": "int",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "transaction_type": {
-    "description": "Transaction type: purchase / refund / topup / transfer.",
-    "dtype": "categorical",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "is_first_transaction": {
-    "description": "True if this is the user's first ever transaction.",
-    "dtype": "bool",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": false
-  },
-  "has_historical_amount": {
-    "description": "True if user has any prior transaction amount.",
-    "dtype": "bool",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": false
-  },
-  "has_previous_location": {
-    "description": "True if user has a prior known location.",
-    "dtype": "bool",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": false
-  },
-  "historical_transaction_count": {
-    "description": "Number of prior transactions by the user.",
-    "dtype": "int",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": false
-  },
-  "historical_avg_amount": {
-    "description": "Mean amount of prior transactions for the user.",
-    "dtype": "float",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": true
-  },
-  "amount_ratio_to_history": {
-    "description": "current_amount / historical_avg_amount (None if no history).",
-    "dtype": "float",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": true
-  },
-  "transaction_velocity_5m": {
-    "description": "Number of prior transactions by the user within the previous 5 minutes.",
-    "dtype": "int",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": false,
-    "calculation_window_minutes": 5
-  },
-  "transaction_velocity_1h": {
-    "description": "Number of prior transactions by the user within the previous 60 minutes.",
-    "dtype": "int",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": false,
-    "calculation_window_minutes": 60
-  },
-  "time_since_previous_transaction": {
-    "description": "Seconds since the user's previous transaction (None if first).",
-    "dtype": "float",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": true
-  },
-  "unique_devices_seen_before": {
-    "description": "Distinct devices the user has used in prior transactions.",
-    "dtype": "int",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": false
-  },
-  "unique_ips_seen_before": {
-    "description": "Distinct IPs the user has used in prior transactions.",
-    "dtype": "int",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": false
-  },
-  "device_user_count": {
-    "description": "Distinct users observed on this device in prior transactions.",
-    "dtype": "int",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": false
-  },
-  "ip_user_count": {
-    "description": "Distinct users observed on this IP in prior transactions.",
-    "dtype": "int",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": false
-  },
-  "failed_attempt_velocity": {
-    "description": "Number of prior failed transactions by the user in the last 60 minutes.",
-    "dtype": "int",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": false,
-    "calculation_window_minutes": 60
-  },
-  "geographic_distance_from_previous": {
-    "description": "Km from the user's previous transaction location (None if first).",
-    "dtype": "float",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": true
-  },
-  "geographic_velocity": {
-    "description": "Implied travel speed (km/h) from previous transaction location.",
-    "dtype": "float",
-    "uses_future_data": false,
-    "historical": true,
-    "can_be_missing": true
-  },
-  "account_age_seconds": {
-    "description": "Seconds between account creation and transaction time.",
-    "dtype": "float",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "is_fraud": {
-    "description": "Ground-truth fraud label. Not derived from the model.",
-    "dtype": "bool",
-    "uses_future_data": false,
-    "historical": false,
-    "can_be_missing": false
-  },
-  "_global_invariants": {
-    "current_event_excluded_from_own_history": true,
-    "no_future_data_in_any_feature": true,
-    "raw_events_immutable": true,
-    "fraud_scenario_excluded": true
+  "velocity_window_minutes": 5,
+  "features": {
+    "transaction_id": {
+      "description": "Opaque UUID transaction identifier.",
+      "dtype": "string",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "timestamp": {
+      "description": "ISO-8601 UTC transaction timestamp.",
+      "dtype": "datetime",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "user_id": {
+      "description": "Opaque user identifier.",
+      "dtype": "string",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "merchant_id": {
+      "description": "Opaque merchant identifier.",
+      "dtype": "string",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "device_fingerprint": {
+      "description": "Opaque device fingerprint.",
+      "dtype": "string",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "ip_address": {
+      "description": "IPv4 address.",
+      "dtype": "string",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "payment_method": {
+      "description": "Payment method used by the transaction.",
+      "dtype": "string",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "transaction_amount": {
+      "description": "Transaction amount.",
+      "dtype": "float",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "currency": {
+      "description": "Transaction currency.",
+      "dtype": "string",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "latitude": {
+      "description": "Transaction latitude.",
+      "dtype": "float",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "longitude": {
+      "description": "Transaction longitude.",
+      "dtype": "float",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "transaction_status": {
+      "description": "Transaction status.",
+      "dtype": "string",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "account_creation_timestamp": {
+      "description": "Account creation timestamp.",
+      "dtype": "datetime",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "payment_attempt_number": {
+      "description": "Payment attempt number.",
+      "dtype": "integer",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "transaction_type": {
+      "description": "Transaction type.",
+      "dtype": "string",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "is_fraud": {
+      "description": "Ground-truth fraud label.",
+      "dtype": "boolean",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "fraud_scenario": {
+      "description": "Validation-only fraud scenario metadata; must not be used as a model feature.",
+      "dtype": "string",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "historical_transaction_count": {
+      "description": "Number of transactions by this user strictly before the current transaction.",
+      "dtype": "integer",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": false
+    },
+    "historical_avg_amount": {
+      "description": "Average amount of this user's transactions strictly before the current transaction.",
+      "dtype": "float",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": true
+    },
+    "is_first_transaction": {
+      "description": "Whether this is the user's first transaction.",
+      "dtype": "boolean",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": false
+    },
+    "has_historical_amount": {
+      "description": "Whether the user has at least one historical transaction before the current event.",
+      "dtype": "boolean",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": false
+    },
+    "has_previous_location": {
+      "description": "Whether the user has a previous transaction location.",
+      "dtype": "boolean",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": false
+    },
+    "amount_ratio_to_history": {
+      "description": "Current transaction amount divided by the user's historical average amount.",
+      "dtype": "float",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": true
+    },
+    "transaction_velocity_5m": {
+      "description": "Number of prior transactions by this user within the previous five minutes.",
+      "dtype": "integer",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": false
+    },
+    "transaction_velocity_1h": {
+      "description": "Number of prior transactions by this user within the previous one hour.",
+      "dtype": "integer",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": false
+    },
+    "time_since_previous_transaction": {
+      "description": "Seconds since the user's immediately preceding transaction.",
+      "dtype": "float",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": true
+    },
+    "unique_devices_seen_before": {
+      "description": "Number of distinct devices previously observed for this user.",
+      "dtype": "integer",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": false
+    },
+    "unique_ips_seen_before": {
+      "description": "Number of distinct IP addresses previously observed for this user.",
+      "dtype": "integer",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": false
+    },
+    "device_user_count": {
+      "description": "Number of distinct users previously observed on the current device.",
+      "dtype": "integer",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": false
+    },
+    "ip_user_count": {
+      "description": "Number of distinct users previously observed on the current IP address.",
+      "dtype": "integer",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": false
+    },
+    "failed_attempt_velocity": {
+      "description": "Number of prior failed transactions by this user within the previous hour.",
+      "dtype": "integer",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": false
+    },
+    "geographic_distance_from_previous": {
+      "description": "Great-circle distance in kilometers from the user's previous transaction location.",
+      "dtype": "float",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": true
+    },
+    "geographic_velocity": {
+      "description": "Distance from previous location divided by elapsed time, in kilometers per hour.",
+      "dtype": "float",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": true
+    },
+    "account_age_seconds": {
+      "description": "Age of the user's account at transaction time.",
+      "dtype": "float",
+      "uses_future_data": false,
+      "historical": false,
+      "can_be_missing": false
+    },
+    "time_since_last_transaction_minutes": {
+      "description": "Compatibility alias for time since previous transaction, expressed in minutes.",
+      "dtype": "float",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": true
+    },
+    "amount_vs_historical_avg": {
+      "description": "Compatibility alias for amount ratio to historical average.",
+      "dtype": "float",
+      "uses_future_data": false,
+      "historical": true,
+      "can_be_missing": true
+    }
   }
 }
