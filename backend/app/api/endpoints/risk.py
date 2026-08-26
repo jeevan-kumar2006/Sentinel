@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 @router.post("/risk/score", response_model=RiskScoreResponse)
-async def score_transaction(request: RiskScoreRequest):
+async def score_transaction(request: RiskScoreRequest) -> RiskScoreResponse:
     data = request.model_dump()
     txn_id = data.pop("transaction_id", None)
 
