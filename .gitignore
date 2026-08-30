@@ -75,3 +75,6 @@ data/generated/_repro_*
 
 # Node
 node_modules/
+
+# Frontend build
+frontend/dist/
