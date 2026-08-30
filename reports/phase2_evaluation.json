@@ -1,0 +1,143 @@
+{
+  "dataset": {
+    "total_rows": 5000,
+    "fraud_rate": 0.021519259737465032
+  },
+  "splits": {
+    "train": {
+      "start": "2024-01-01 00:00:59.565561+00:00",
+      "end": "2024-04-08 09:28:18.221930+00:00",
+      "rows": 4647,
+      "fraud_rate": 0.021519259737465032
+    },
+    "validation": {
+      "start": "2024-04-08 09:50:34.023781+00:00",
+      "end": "2024-04-11 04:47:20.529304+00:00",
+      "rows": 173,
+      "fraud_rate": 0.26011560693641617
+    },
+    "test": {
+      "start": "2024-04-11 05:26:59.012215+00:00",
+      "end": "2024-04-13 23:59:32.685341+00:00",
+      "rows": 180,
+      "fraud_rate": 0.3055555555555556
+    }
+  },
+  "features_used": [
+    "transaction_amount",
+    "latitude",
+    "longitude",
+    "payment_attempt_number",
+    "is_first_transaction",
+    "has_historical_amount",
+    "has_previous_location",
+    "historical_transaction_count",
+    "historical_avg_amount",
+    "amount_ratio_to_history",
+    "transaction_velocity_5m",
+    "transaction_velocity_1h",
+    "time_since_previous_transaction",
+    "unique_devices_seen_before",
+    "unique_ips_seen_before",
+    "device_user_count",
+    "ip_user_count",
+    "failed_attempt_velocity",
+    "geographic_distance_from_previous",
+    "geographic_velocity",
+    "account_age_seconds"
+  ],
+  "validation_results": {
+    "Rule Baseline": {
+      "precision": 0.8928571428571429,
+      "recall": 0.5555555555555556,
+      "f1": 0.684931506849315,
+      "tn": 125,
+      "fp": 3,
+      "fn": 20,
+      "tp": 25,
+      "pr_auc": 0.6116386824479311,
+      "roc_auc": 0.7660590277777778
+    },
+    "Logistic Regression": {
+      "precision": 0.8958333333333334,
+      "recall": 0.9555555555555556,
+      "f1": 0.9247311827956989,
+      "tn": 123,
+      "fp": 5,
+      "fn": 2,
+      "tp": 43,
+      "pr_auc": 0.9139810909121813,
+      "roc_auc": 0.9828993055555556
+    },
+    "HistGradientBoosting": {
+      "precision": 0.972972972972973,
+      "recall": 0.8,
+      "f1": 0.8780487804878049,
+      "tn": 127,
+      "fp": 1,
+      "fn": 9,
+      "tp": 36,
+      "pr_auc": 0.9898881455911324,
+      "roc_auc": 0.9970486111111111
+    }
+  },
+  "selected_thresholds": {
+    "review_threshold": 0.2,
+    "block_threshold": 0.5,
+    "max_fp_block_rate": 0.05,
+    "fp_block_constraint_note": "Synthetic Sentinel benchmark assumption, not a Razorpay requirement."
+  },
+  "test_results": {
+    "metrics": {
+      "precision": 1.0,
+      "recall": 0.8545454545454545,
+      "f1": 0.9215686274509803,
+      "tn": 125,
+      "fp": 0,
+      "fn": 8,
+      "tp": 47,
+      "pr_auc": 0.9961495436824385,
+      "roc_auc": 0.998109090909091
+    },
+    "routing": {
+      "ALLOW": 132,
+      "REVIEW": 1,
+      "BLOCK": 47
+    },
+    "economics": {
+      "baseline_fraud_loss": 605609.94,
+      "residual_fraud_loss": 28712.3,
+      "fraud_loss_prevented": 576897.6399999999,
+      "false_positive_cost": 0.0,
+      "net_economic_benefit": 576897.6399999999
+    },
+    "scenario_recall": {
+      "ip_concentration": {
+        "count": 25,
+        "recall": 0.88
+      },
+      "amount_anomaly": {
+        "count": 4,
+        "recall": 1.0
+      },
+      "geo_anomaly": {
+        "count": 6,
+        "recall": 0.5
+      },
+      "combined": {
+        "count": 9,
+        "recall": 0.8888888888888888
+      },
+      "device_velocity": {
+        "count": 11,
+        "recall": 0.9090909090909091
+      }
+    }
+  },
+  "economic_assumptions": {
+    "chargeback_fee": 1500,
+    "customer_ltv": 5000,
+    "max_fp_block_rate": 0.05,
+    "fp_block_constraint_note": "Synthetic Sentinel benchmark assumption, not a Razorpay requirement."
+  }
+}
