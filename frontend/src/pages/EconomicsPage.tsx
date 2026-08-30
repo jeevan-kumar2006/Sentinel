@@ -34,20 +34,20 @@ export default function EconomicsPage() {
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold text-slate-100">Economic Impact</h2>
-        <p className="text-slate-400 mt-1">Threshold optimization and financial outcomes</p>
+        <p className="text-slate-400 mt-1">Threshold optimization and financial outcomes · Held-out Test Set</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>
-          <h3 className="text-sm font-semibold text-slate-400 mb-4 uppercase">Frozen Thresholds</h3>
+          <h3 className="text-sm font-semibold text-slate-400 mb-4 uppercase">Frozen Thresholds (Risk Score Scale 0-100)</h3>
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="text-slate-400">Review Threshold</span>
-              <span className="text-amber-400 font-bold">{data.review_threshold.toFixed(2)}</span>
+              <span className="text-amber-400 font-bold">{(data.review_threshold * 100).toFixed(1)}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-slate-400">Block Threshold</span>
-              <span className="text-rose-400 font-bold">{data.block_threshold.toFixed(2)}</span>
+              <span className="text-rose-400 font-bold">{(data.block_threshold * 100).toFixed(1)}</span>
             </div>
           </div>
         </Card>
@@ -94,9 +94,9 @@ export default function EconomicsPage() {
       </Card>
 
       <Card>
-        <h3 className="text-sm font-semibold text-slate-400 mb-4 uppercase">Threshold Tradeoff Curve</h3>
+        <h3 className="text-sm font-semibold text-slate-400 mb-2 uppercase">Threshold Tradeoff Curve</h3>
         <p className="text-slate-500 text-sm">
-          Threshold tradeoff curve is not available from the current evaluation artifact.
+          Threshold tradeoff curve data is not available from the current evaluation artifact.
         </p>
       </Card>
     </div>

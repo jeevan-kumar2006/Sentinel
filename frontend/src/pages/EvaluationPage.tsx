@@ -34,7 +34,7 @@ export default function EvaluationPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold text-slate-100">Model Evaluation</h2>
+        <h2 className="text-2xl font-bold text-slate-100">Model Performance</h2>
         <div className="mt-2 inline-block bg-amber-500/10 text-amber-400 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-semibold">
           HELD-OUT TEST SET EVALUATION
         </div>
@@ -43,11 +43,12 @@ export default function EvaluationPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <Card><p className="text-xs text-slate-500 mb-1">Precision</p><p className="text-xl font-bold text-slate-100">{formatPercent(metrics.precision)}</p></Card>
         <Card><p className="text-xs text-slate-500 mb-1">Recall</p><p className="text-xl font-bold text-slate-100">{formatPercent(metrics.recall)}</p></Card>
         <Card><p className="text-xs text-slate-500 mb-1">F1 Score</p><p className="text-xl font-bold text-slate-100">{formatPercent(metrics.f1)}</p></Card>
         <Card><p className="text-xs text-slate-500 mb-1">PR-AUC</p><p className="text-xl font-bold text-slate-100">{metrics.pr_auc ? formatPercent(metrics.pr_auc) : 'N/A'}</p></Card>
+        <Card><p className="text-xs text-slate-500 mb-1">ROC-AUC</p><p className="text-xl font-bold text-slate-100">{metrics.roc_auc ? formatPercent(metrics.roc_auc) : 'N/A'}</p></Card>
       </div>
 
       <Card>
