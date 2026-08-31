@@ -50,7 +50,7 @@ export default function DashboardPage() {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold text-slate-100">Sentinel Risk Control Center</h2>
-          <p className="text-slate-400 mt-1">Cost-Aware AI Risk Intelligence · <span className="text-amber-400">Held-out Test Activity</span></p>
+          <p className="text-slate-400 mt-1">Cost-Aware AI Risk Intelligence · <span className="inline-block bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded text-xs font-semibold ml-2">HELD-OUT TEST SET</span></p>
         </div>
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30">
           <ShieldCheck className="text-emerald-400" size={16} />
@@ -97,7 +97,7 @@ export default function DashboardPage() {
           </div>
           <div className="space-y-3">
             {blockTxns?.items.map(txn => (
-              <div key={txn.transaction_id} onClick={() => navigate(`/transactions/${txn.transaction_id}`)} className="flex justify-between items-center p-3 bg-slate-900 rounded-lg border border-slate-700 hover:border-rose-500/50 cursor-pointer transition-colors">
+              <div key={txn.transaction_id} onClick={() => navigate(`/transactions/${txn.transaction_id}`)} className="flex justify-between items-center p-3 bg-slate-900 rounded-lg border border-[...]
                 <div>
                   <p className="text-sm font-semibold text-slate-200">{formatCurrency(txn.transaction_amount)}</p>
                   <p className="text-xs text-slate-500 font-mono">{txn.transaction_id.slice(0, 8)}...</p>
@@ -121,7 +121,7 @@ export default function DashboardPage() {
           </div>
           <div className="space-y-3">
             {reviewTxns?.items.map(txn => (
-              <div key={txn.transaction_id} onClick={() => navigate(`/transactions/${txn.transaction_id}`)} className="flex justify-between items-center p-3 bg-slate-900 rounded-lg border border-slate-700 hover:border-amber-500/50 cursor-pointer transition-colors">
+              <div key={txn.transaction_id} onClick={() => navigate(`/transactions/${txn.transaction_id}`)} className="flex justify-between items-center p-3 bg-slate-900 rounded-lg border border-[...]
                 <div>
                   <p className="text-sm font-semibold text-slate-200">{formatCurrency(txn.transaction_amount)}</p>
                   <p className="text-xs text-slate-500 font-mono">{txn.transaction_id.slice(0, 8)}...</p>
@@ -141,6 +141,7 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-1">
           <h3 className="text-sm font-semibold text-slate-400 mb-4 uppercase">Routing Distribution</h3>
+          <p className="text-xs text-slate-500 mb-3">From held-out test data</p>
           <RoutingChart data={summary.routing_counts} />
         </Card>
 
