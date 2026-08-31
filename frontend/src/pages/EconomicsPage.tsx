@@ -43,11 +43,11 @@ export default function EconomicsPage() {
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="text-slate-400">Review Threshold</span>
-              <span className="text-amber-400 font-bold">{(data.review_threshold * 100).toFixed(1)}</span>
+              <span className="text-amber-400 font-bold">{(data.review_threshold * 100).toFixed(0)}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-slate-400">Block Threshold</span>
-              <span className="text-rose-400 font-bold">{(data.block_threshold * 100).toFixed(1)}</span>
+              <span className="text-rose-400 font-bold">{(data.block_threshold * 100).toFixed(0)}</span>
             </div>
           </div>
         </Card>
