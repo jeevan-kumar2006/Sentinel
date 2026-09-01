@@ -1,4 +1,4 @@
-import { HealthResponse, SummaryResponse, EvaluationResponse, EconomicsResponse, PaginatedTransactions, TransactionDetail } from '../types/api';
+import { HealthResponse, SummaryResponse, EvaluationResponse, EconomicsResponse, PaginatedTransactions, TransactionDetail, InvestigatorResponse } from '../types/api';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api/v1';
 
@@ -26,3 +26,5 @@ export const getTransactions = (params: { page: number; limit: number; risk_deci
 };
 
 export const getTransaction = (id: string) => fetchAPI<TransactionDetail>(`/transactions/${id}`);
+
+export const investigateTransaction = (id: string) => fetchAPI<InvestigatorResponse>(`/investigator/${id}`, { method: 'POST' });

@@ -108,3 +108,21 @@ export interface PaginatedTransactions {
   total: number;
   total_pages: number;
 }
+
+export interface KeySignal {
+  signal: string;
+  evidence: string;
+}
+
+export interface InvestigatorResponse {
+  transaction_id: string;
+  available: boolean;
+  decision: string;
+  risk_score: number;
+  risk_probability: number;
+  summary: string;
+  key_signals: KeySignal[];
+  recommended_action: string;
+  explanation_confidence: string;
+  limitations: string[];
+}

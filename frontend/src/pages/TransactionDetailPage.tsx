@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getTransaction } from '../services/api';
-import { TransactionDetail } from '../types/api';
+import { getTransaction, investigateTransaction } from '../services/api';
+import { TransactionDetail, InvestigatorResponse } from '../types/api';
 import LoadingState from '../components/ui/LoadingState';
 import ErrorState from '../components/ui/ErrorState';
 import Card from '../components/ui/Card';
@@ -9,13 +9,16 @@ import Badge from '../components/ui/Badge';
 import ReasonCodeList from '../components/transactions/ReasonCodeList';
 import { formatDate } from '../utils/dates';
 import { formatCurrency, formatNumber } from '../utils/format';
-import { ArrowLeft, ShieldAlert, Activity, MapPin, Smartphone, Globe } from 'lucide-react';
+import { ArrowLeft, ShieldAlert, Activity, MapPin, Smartphone, Globe, Sparkles, Loader } from 'lucide-react';
 
 export default function TransactionDetailPage() {
   const { id } = useParams<{ id: string }>();
   const [txn, setTxn] = useState<TransactionDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [investigation, setInvestigation] = useState<InvestigatorResponse | null>(null);
+  const [investigating, setInvestigating] = useState(false);
+  const [investigationError, setInvestigationError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,6 +34,20 @@ export default function TransactionDetailPage() {
     };
     fetchData();
   }, [id]);
+
+  const handleInvestigate = async () => {
+    if (!id) return;
+    setInvestigating(true);
+    setInvestigationError(null);
+    try {
+      const result = await investigateTransaction(id);
+      setInvestigation(result);
+    } catch (err) {
+      setInvestigationError("Failed to investigate transaction. Please try again.");
+    } finally {
+      setInvestigating(false);
+    }
+  };
 
   if (loading) return <LoadingState message="Loading transaction..." />;
   if (error || !txn) return <ErrorState message={error || "Unknown error"} />;
@@ -61,7 +78,7 @@ export default function TransactionDetailPage() {
 
       <Card>
         <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-semibold text-slate-400 uppercase">Risk Level</h3>
+          <h3 className="text-sm font-semibold text-slate-400 uppercase">Risk Level</h3>
         </div>
         <div className="h-4 w-full rounded-full bg-slate-700 overflow-hidden">
           <div
@@ -89,6 +106,82 @@ export default function TransactionDetailPage() {
           <ReasonCodeList reasons={txn.reasons} />
         </Card>
       </div>
+
+      {/* AI Investigator Section */}
+      <Card className="bg-slate-900/50 border-emerald-500/20">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-sm font-semibold text-emerald-400 uppercase flex items-center gap-2">
+            <Sparkles size={16} /> AI Investigator
+          </h3>
+          <button
+            onClick={handleInvestigate}
+            disabled={investigating}
+            className="px-3 py-1 text-sm bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-600 disabled:cursor-not-allowed text-white rounded transition-colors flex items-center gap-2"
+          >
+            {investigating ? (
+              <>
+                <Loader size={14} className="animate-spin" /> Investigating...
+              </>
+            ) : (
+              <>
+                <Sparkles size={14} /> Investigate
+              </>
+            )}
+          </button>
+        </div>
+
+        {investigationError && (
+          <div className="text-sm text-rose-400 mb-4">
+            {investigationError}
+          </div>
+        )}
+
+        {investigation ? (
+          <div className="space-y-4">
+            <div>
+              <p className="text-sm text-slate-300 mb-2">{investigation.summary}</p>
+              <p className="text-xs text-slate-500">
+                Confidence: <span className="capitalize">{investigation.explanation_confidence}</span>
+              </p>
+            </div>
+
+            {investigation.key_signals.length > 0 && (
+              <div>
+                <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase">Key Signals</h4>
+                <div className="space-y-2">
+                  {investigation.key_signals.map((signal, idx) => (
+                    <div key={idx} className="bg-slate-800/50 p-2 rounded text-xs">
+                      <p className="font-semibold text-slate-300">{signal.signal}</p>
+                      <p className="text-slate-400 mt-1">{signal.evidence}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {investigation.limitations.length > 0 && (
+              <div>
+                <h4 className="text-xs font-semibold text-slate-400 mb-2 uppercase">Limitations</h4>
+                <ul className="text-xs text-slate-400 list-disc list-inside space-y-1">
+                  {investigation.limitations.map((limitation, idx) => (
+                    <li key={idx}>{limitation}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div className="pt-2 border-t border-slate-700">
+              <p className="text-xs text-slate-500">
+                <span className="font-semibold">Recommended Action:</span> {investigation.recommended_action}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <p className="text-sm text-slate-400">
+            Click "Investigate" to get an AI-powered explanation of this transaction based on verified Sentinel evidence.
+          </p>
+        )}
+      </Card>
 
       <Card>
         <h3 className="text-sm font-semibold text-slate-400 mb-4 uppercase flex items-center gap-2"><Activity size={16} /> Behavioral Signals</h3>

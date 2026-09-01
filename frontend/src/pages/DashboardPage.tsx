@@ -97,7 +97,7 @@ export default function DashboardPage() {
           </div>
           <div className="space-y-3">
             {blockTxns?.items.map(txn => (
-              <div key={txn.transaction_id} onClick={() => navigate(`/transactions/${txn.transaction_id}`)} className="flex justify-between items-center p-3 bg-slate-900 rounded-lg border border-[...]
+              <div key={txn.transaction_id} onClick={() => navigate(`/transactions/${txn.transaction_id}`)} className="flex justify-between items-center p-3 bg-slate-900 rounded-lg border border-rose-500/30 cursor-pointer hover:bg-slate-800 transition-colors">
                 <div>
                   <p className="text-sm font-semibold text-slate-200">{formatCurrency(txn.transaction_amount)}</p>
                   <p className="text-xs text-slate-500 font-mono">{txn.transaction_id.slice(0, 8)}...</p>
@@ -121,7 +121,7 @@ export default function DashboardPage() {
           </div>
           <div className="space-y-3">
             {reviewTxns?.items.map(txn => (
-              <div key={txn.transaction_id} onClick={() => navigate(`/transactions/${txn.transaction_id}`)} className="flex justify-between items-center p-3 bg-slate-900 rounded-lg border border-[...]
+              <div key={txn.transaction_id} onClick={() => navigate(`/transactions/${txn.transaction_id}`)} className="flex justify-between items-center p-3 bg-slate-900 rounded-lg border border-amber-500/30 cursor-pointer hover:bg-slate-800 transition-colors">
                 <div>
                   <p className="text-sm font-semibold text-slate-200">{formatCurrency(txn.transaction_amount)}</p>
                   <p className="text-xs text-slate-500 font-mono">{txn.transaction_id.slice(0, 8)}...</p>
