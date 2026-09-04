@@ -32,7 +32,6 @@ async def investigate_transaction(transaction_id: str):
     
     provider = get_investigator_provider()
     
-    # Catch exceptions to safely return the deterministic fallback
     try:
         investigation = await provider.investigate(evidence)
     except Exception:
@@ -60,7 +59,7 @@ async def investigate_transaction(transaction_id: str):
             decision=decision,
             risk_score=risk_score,
             risk_probability=risk_probability,
-            summary="AI investigation is temporarily unavailable.",
+            summary="AI explanation is temporarily unavailable. Sentinel's authoritative risk score and decision remain unchanged.",
             key_signals=[
                 KeySignal(
                     signal=reason.detail,
