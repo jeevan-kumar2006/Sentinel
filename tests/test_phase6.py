@@ -1,4 +1,10 @@
-import pytest
+﻿import pytest
+import joblib
+import numpy as np
+import pandas as pd
+from sklearn.metrics import confusion_matrix, f1_score, precision_score, recall_score
+from backend.ml.data import load_data
+from backend.ml.economics import EconomicModel
 import json
 import os
 import logging
@@ -127,3 +133,114 @@ class TestPhase6Hardening:
         assert "secret_internal_field" not in ev_str
         assert "api_key" not in ev_str
         assert "historical_transactions" not in ev_str
+
+    def test_threshold_sweep_uses_validation_only(self):
+        """Verify threshold sweep is reproducible from validation data only."""
+        with open(ROOT / "reports" / "phase2_evaluation.json") as f:
+            report = json.load(f)
+
+        sweep = report["validation_results"]["threshold_sweep"]
+
+        assert len(sweep) == 20
+
+        thresholds = [point["threshold"] for point in sweep]
+        expected_thresholds = np.linspace(0.05, 0.95, 20)
+
+        assert thresholds == pytest.approx(expected_thresholds.tolist())
+
+        splits, _ = load_data()
+        val_df = splits["validation"]
+
+        with open(ROOT / "artifacts" / "selected_features.json") as f:
+            features = json.load(f)
+
+        with open(ROOT / "artifacts" / "threshold_config.json") as f:
+            thresholds_config = json.load(f)
+
+        preprocessor = joblib.load(ROOT / "artifacts" / "preprocessing.joblib")
+        model = joblib.load(ROOT / "artifacts" / "selected_model.joblib")
+
+        probs_val = model.predict_proba(
+            preprocessor.transform(val_df[features])
+        )[:, 1]
+
+        review_t = thresholds_config["review_threshold"]
+        economic_model = EconomicModel()
+
+        for point, threshold in zip(sweep, expected_thresholds):
+            val_pred = (probs_val >= threshold).astype(int)
+
+            decisions = pd.Series("ALLOW", index=val_df.index)
+            decisions[probs_val >= review_t] = "REVIEW"
+            decisions[probs_val >= threshold] = "BLOCK"
+
+            economics = economic_model.calculate_loss(
+                val_df,
+                decisions,
+            )
+
+            tn, fp, fn, tp = confusion_matrix(
+                val_df["is_fraud"],
+                val_pred,
+            ).ravel()
+
+            precision = precision_score(
+                val_df["is_fraud"],
+                val_pred,
+                zero_division=0,
+            )
+
+            recall = recall_score(
+                val_df["is_fraud"],
+                val_pred,
+                zero_division=0,
+            )
+
+            f1 = f1_score(
+                val_df["is_fraud"],
+                val_pred,
+                zero_division=0,
+            )
+
+            routing = decisions.value_counts()
+
+            assert point["threshold"] == pytest.approx(threshold)
+
+            assert point["routing"] == {
+                "allow": int(routing.get("ALLOW", 0)),
+                "review": int(routing.get("REVIEW", 0)),
+                "block": int(routing.get("BLOCK", 0)),
+            }
+
+            assert point["classification"]["basis"] == "BLOCK vs NOT-BLOCK"
+            assert point["classification"]["precision"] == pytest.approx(precision)
+            assert point["classification"]["recall"] == pytest.approx(recall)
+            assert point["classification"]["f1"] == pytest.approx(f1)
+            assert point["classification"]["tp"] == int(tp)
+            assert point["classification"]["fp"] == int(fp)
+            assert point["classification"]["fn"] == int(fn)
+            assert point["classification"]["tn"] == int(tn)
+
+            assert point["precision"] == pytest.approx(precision)
+            assert point["recall"] == pytest.approx(recall)
+            assert point["f1"] == pytest.approx(f1)
+
+            assert point["economics"]["baseline_fraud_loss"] == pytest.approx(
+                economics["baseline_fraud_loss"]
+            )
+            assert point["economics"]["residual_fraud_loss"] == pytest.approx(
+                economics["residual_fraud_loss"]
+            )
+            assert point["economics"]["fraud_loss_prevented"] == pytest.approx(
+                economics["fraud_loss_prevented"]
+            )
+            assert point["economics"]["false_positive_cost"] == pytest.approx(
+                economics["false_positive_cost"]
+            )
+            assert point["economics"]["net_economic_benefit"] == pytest.approx(
+                economics["net_economic_benefit"]
+            )
+
+            assert point["net_economic_benefit"] == pytest.approx(
+                economics["net_economic_benefit"]
+            )

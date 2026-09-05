@@ -10,6 +10,7 @@ import Badge from '../components/ui/Badge';
 import { ShieldCheck, TrendingDown, AlertTriangle, IndianRupee, ArrowRight } from 'lucide-react';
 import { formatCurrency, formatNumber, formatPercent } from '../utils/format';
 import { useNavigate } from 'react-router-dom';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 export default function DashboardPage() {
   const navigate = useNavigate();
@@ -24,26 +25,27 @@ export default function DashboardPage() {
     const fetchData = async () => {
       try {
         const [sumData, healthData, blockData, reviewData] = await Promise.all([
-          getDashboardSummary(),
-          getHealth(),
+          getDashboardSummary(), getHealth(),
           getTransactions({ page: 1, limit: 5, risk_decision: 'BLOCK' }),
           getTransactions({ page: 1, limit: 5, risk_decision: 'REVIEW' })
         ]);
-        setSummary(sumData);
-        setHealth(healthData);
-        setBlockTxns(blockData);
-        setReviewTxns(reviewData);
+        setSummary(sumData); setHealth(healthData);
+        setBlockTxns(blockData); setReviewTxns(reviewData);
       } catch (err) {
         setError("Failed to load dashboard data. Check that FastAPI is running on http://127.0.0.1:8000");
-      } finally {
-        setLoading(false);
-      }
+      } finally { setLoading(false); }
     };
     fetchData();
   }, []);
 
   if (loading) return <LoadingState message="Fetching risk intelligence..." />;
   if (error || !summary || !health) return <ErrorState message={error || "Unknown error"} />;
+
+  const econData = [
+    { name: 'Baseline Loss', value: summary.baseline_fraud_loss_inr, fill: '#f43f5e' },
+    { name: 'Prevented', value: summary.fraud_loss_prevented_inr, fill: '#10b981' },
+    { name: 'Residual Loss', value: summary.residual_fraud_loss_inr, fill: '#f59e0b' }
+  ];
 
   return (
     <div className="space-y-8">
@@ -60,30 +62,10 @@ export default function DashboardPage() {
 
       {/* Operational Summary */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <MetricCard 
-          title="Blocked Transactions" 
-          value={formatNumber(summary.routing_counts.BLOCK || 0)} 
-          icon={<AlertTriangle size={20} />} 
-          accent="rose" 
-        />
-        <MetricCard 
-          title="Requires Review" 
-          value={formatNumber(summary.routing_counts.REVIEW || 0)} 
-          icon={<AlertTriangle size={20} />} 
-          accent="amber" 
-        />
-        <MetricCard 
-          title="Fraud Prevented (Value)" 
-          value={formatCurrency(summary.fraud_loss_prevented_inr)} 
-          icon={<IndianRupee size={20} />} 
-          accent="emerald" 
-        />
-        <MetricCard 
-          title="Residual Fraud Exposure" 
-          value={formatCurrency(summary.residual_fraud_loss_inr)} 
-          icon={<TrendingDown size={20} />} 
-          accent="slate" 
-        />
+        <MetricCard title="Blocked Transactions" value={formatNumber(summary.routing_counts.BLOCK || 0)} icon={<AlertTriangle size={20} />} accent="rose" />
+        <MetricCard title="Requires Review" value={formatNumber(summary.routing_counts.REVIEW || 0)} icon={<AlertTriangle size={20} />} accent="amber" />
+        <MetricCard title="Fraud Prevented (Value)" value={formatCurrency(summary.fraud_loss_prevented_inr)} icon={<IndianRupee size={20} />} accent="emerald" />
+        <MetricCard title="Residual Fraud Exposure" value={formatCurrency(summary.residual_fraud_loss_inr)} icon={<TrendingDown size={20} />} accent="slate" />
       </div>
 
       {/* Risk Activity */}
@@ -91,21 +73,13 @@ export default function DashboardPage() {
         <Card>
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-sm font-semibold text-rose-400 uppercase">High Risk (Blocked)</h3>
-            <button onClick={() => navigate('/transactions?risk_decision=BLOCK')} className="text-xs text-slate-400 hover:text-emerald-400 flex items-center gap-1">
-              View All <ArrowRight size={12} />
-            </button>
+            <button onClick={() => navigate('/transactions?risk_decision=BLOCK')} className="text-xs text-slate-400 hover:text-emerald-400 flex items-center gap-1">View All <ArrowRight size={12} /></button>
           </div>
           <div className="space-y-3">
             {blockTxns?.items.map(txn => (
               <div key={txn.transaction_id} onClick={() => navigate(`/transactions/${txn.transaction_id}`)} className="flex justify-between items-center p-3 bg-slate-900 rounded-lg border border-rose-500/30 cursor-pointer hover:bg-slate-800 transition-colors">
-                <div>
-                  <p className="text-sm font-semibold text-slate-200">{formatCurrency(txn.transaction_amount)}</p>
-                  <p className="text-xs text-slate-500 font-mono">{txn.transaction_id.slice(0, 8)}...</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm font-bold text-rose-400">{txn.risk_score.toFixed(1)}</p>
-                  <Badge decision={txn.decision} />
-                </div>
+                <div><p className="text-sm font-semibold text-slate-200">{formatCurrency(txn.transaction_amount)}</p><p className="text-xs text-slate-500 font-mono">{txn.transaction_id.slice(0, 8)}...</p></div>
+                <div className="text-right"><p className="text-sm font-bold text-rose-400">{txn.risk_score.toFixed(1)}</p><Badge decision={txn.decision} /></div>
               </div>
             ))}
             {blockTxns?.items.length === 0 && <p className="text-sm text-slate-500 text-center py-4">No blocked transactions in test set.</p>}
@@ -115,21 +89,13 @@ export default function DashboardPage() {
         <Card>
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-sm font-semibold text-amber-400 uppercase">Requires Review</h3>
-            <button onClick={() => navigate('/transactions?risk_decision=REVIEW')} className="text-xs text-slate-400 hover:text-emerald-400 flex items-center gap-1">
-              View All <ArrowRight size={12} />
-            </button>
+            <button onClick={() => navigate('/transactions?risk_decision=REVIEW')} className="text-xs text-slate-400 hover:text-emerald-400 flex items-center gap-1">View All <ArrowRight size={12} /></button>
           </div>
           <div className="space-y-3">
             {reviewTxns?.items.map(txn => (
               <div key={txn.transaction_id} onClick={() => navigate(`/transactions/${txn.transaction_id}`)} className="flex justify-between items-center p-3 bg-slate-900 rounded-lg border border-amber-500/30 cursor-pointer hover:bg-slate-800 transition-colors">
-                <div>
-                  <p className="text-sm font-semibold text-slate-200">{formatCurrency(txn.transaction_amount)}</p>
-                  <p className="text-xs text-slate-500 font-mono">{txn.transaction_id.slice(0, 8)}...</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm font-bold text-amber-400">{txn.risk_score.toFixed(1)}</p>
-                  <Badge decision={txn.decision} />
-                </div>
+                <div><p className="text-sm font-semibold text-slate-200">{formatCurrency(txn.transaction_amount)}</p><p className="text-xs text-slate-500 font-mono">{txn.transaction_id.slice(0, 8)}...</p></div>
+                <div className="text-right"><p className="text-sm font-bold text-amber-400">{txn.risk_score.toFixed(1)}</p><Badge decision={txn.decision} /></div>
               </div>
             ))}
             {reviewTxns?.items.length === 0 && <p className="text-sm text-slate-500 text-center py-4">No transactions require review.</p>}
@@ -140,34 +106,27 @@ export default function DashboardPage() {
       {/* Secondary Analytics */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-1">
-          <h3 className="text-sm font-semibold text-slate-400 mb-4 uppercase">Routing Distribution</h3>
-          <p className="text-xs text-slate-500 mb-3">From held-out test data</p>
+          <h3 className="text-sm font-semibold text-slate-400 mb-4 uppercase">How Sentinel Handled Transactions</h3>
+          <p className="text-xs text-slate-500 mb-4">What this shows: The proportion of transactions Sentinel allowed, routed for review, or blocked.</p>
           <RoutingChart data={summary.routing_counts} />
         </Card>
 
         <Card className="lg:col-span-2">
-          <h3 className="text-sm font-semibold text-slate-400 mb-4 uppercase">Economic Summary (Held-out Test)</h3>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center border-b border-slate-700 pb-3">
-              <span className="text-slate-400">Baseline Fraud Loss</span>
-              <span className="text-rose-400 font-semibold">{formatCurrency(summary.baseline_fraud_loss_inr)}</span>
-            </div>
-            <div className="flex justify-between items-center border-b border-slate-700 pb-3">
-              <span className="text-slate-400">Sentinel Protection (Prevented)</span>
-              <span className="text-emerald-400 font-semibold">{formatCurrency(summary.fraud_loss_prevented_inr)}</span>
-            </div>
-            <div className="flex justify-between items-center border-b border-slate-700 pb-3">
-              <span className="text-slate-400">Residual Fraud Loss</span>
-              <span className="text-amber-400 font-semibold">{formatCurrency(summary.residual_fraud_loss_inr)}</span>
-            </div>
-            <div className="flex justify-between items-center border-b border-slate-700 pb-3">
-              <span className="text-slate-400">False Positive Cost</span>
-              <span className="text-rose-400 font-semibold">{formatCurrency(summary.false_positive_cost_inr)}</span>
-            </div>
-            <div className="flex justify-between items-center pt-2">
-              <span className="text-slate-300 font-bold">Net Economic Impact</span>
-              <span className="text-emerald-400 font-bold text-lg">{formatCurrency(summary.net_economic_impact_inr)}</span>
-            </div>
+          <h3 className="text-sm font-semibold text-slate-400 mb-4 uppercase">Fraud Exposure Before vs After Sentinel</h3>
+          <p className="text-xs text-slate-500 mb-4">What this shows: Estimated fraud exposure before protection compared with exposure remaining after Sentinel's decisions.</p>
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={econData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                <XAxis dataKey="name" stroke="#94a3b8" />
+                <YAxis stroke="#94a3b8" tickFormatter={(v) => `₹${v/1000}k`} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155' }}
+                  formatter={(v) => formatCurrency(Number(v))}
+                />
+                <Bar dataKey="value" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </Card>
       </div>

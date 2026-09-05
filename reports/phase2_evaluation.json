@@ -79,7 +79,669 @@
       "tp": 36,
       "pr_auc": 0.9898881455911324,
       "roc_auc": 0.9970486111111111
-    }
+    },
+    "threshold_sweep": [
+      {
+        "threshold": 0.05,
+        "precision": 0.9761904761904762,
+        "recall": 0.9111111111111111,
+        "f1": 0.9425287356321839,
+        "tp": 41,
+        "fp": 1,
+        "fn": 4,
+        "tn": 127,
+        "net_economic_benefit": 2118296.53,
+        "routing": {
+          "allow": 131,
+          "review": 0,
+          "block": 42
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.9761904761904762,
+          "recall": 0.9111111111111111,
+          "f1": 0.9425287356321839,
+          "tp": 41,
+          "fp": 1,
+          "fn": 4,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 12137.91,
+          "fraud_loss_prevented": 2123296.53,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2118296.53
+        }
+      },
+      {
+        "threshold": 0.09736842105263158,
+        "precision": 0.975609756097561,
+        "recall": 0.8888888888888888,
+        "f1": 0.9302325581395349,
+        "tp": 40,
+        "fp": 1,
+        "fn": 5,
+        "tn": 127,
+        "net_economic_benefit": 2116617.75,
+        "routing": {
+          "allow": 132,
+          "review": 0,
+          "block": 41
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.975609756097561,
+          "recall": 0.8888888888888888,
+          "f1": 0.9302325581395349,
+          "tp": 40,
+          "fp": 1,
+          "fn": 5,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 13816.69,
+          "fraud_loss_prevented": 2121617.75,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2116617.75
+        }
+      },
+      {
+        "threshold": 0.14473684210526316,
+        "precision": 0.9743589743589743,
+        "recall": 0.8444444444444444,
+        "f1": 0.9047619047619048,
+        "tp": 38,
+        "fp": 1,
+        "fn": 7,
+        "tn": 127,
+        "net_economic_benefit": 2096586.85,
+        "routing": {
+          "allow": 134,
+          "review": 0,
+          "block": 39
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.9743589743589743,
+          "recall": 0.8444444444444444,
+          "f1": 0.9047619047619048,
+          "tp": 38,
+          "fp": 1,
+          "fn": 7,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 33847.590000000004,
+          "fraud_loss_prevented": 2101586.85,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2096586.85
+        }
+      },
+      {
+        "threshold": 0.19210526315789472,
+        "precision": 0.9743589743589743,
+        "recall": 0.8444444444444444,
+        "f1": 0.9047619047619048,
+        "tp": 38,
+        "fp": 1,
+        "fn": 7,
+        "tn": 127,
+        "net_economic_benefit": 2096586.85,
+        "routing": {
+          "allow": 134,
+          "review": 0,
+          "block": 39
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.9743589743589743,
+          "recall": 0.8444444444444444,
+          "f1": 0.9047619047619048,
+          "tp": 38,
+          "fp": 1,
+          "fn": 7,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 33847.590000000004,
+          "fraud_loss_prevented": 2101586.85,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2096586.85
+        }
+      },
+      {
+        "threshold": 0.23947368421052628,
+        "precision": 0.9743589743589743,
+        "recall": 0.8444444444444444,
+        "f1": 0.9047619047619048,
+        "tp": 38,
+        "fp": 1,
+        "fn": 7,
+        "tn": 127,
+        "net_economic_benefit": 2096586.85,
+        "routing": {
+          "allow": 134,
+          "review": 0,
+          "block": 39
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.9743589743589743,
+          "recall": 0.8444444444444444,
+          "f1": 0.9047619047619048,
+          "tp": 38,
+          "fp": 1,
+          "fn": 7,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 33847.590000000004,
+          "fraud_loss_prevented": 2101586.85,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2096586.85
+        }
+      },
+      {
+        "threshold": 0.28684210526315784,
+        "precision": 0.9736842105263158,
+        "recall": 0.8222222222222222,
+        "f1": 0.891566265060241,
+        "tp": 37,
+        "fp": 1,
+        "fn": 8,
+        "tn": 127,
+        "net_economic_benefit": 2085681.05,
+        "routing": {
+          "allow": 134,
+          "review": 1,
+          "block": 38
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.9736842105263158,
+          "recall": 0.8222222222222222,
+          "f1": 0.891566265060241,
+          "tp": 37,
+          "fp": 1,
+          "fn": 8,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 44753.39,
+          "fraud_loss_prevented": 2090681.05,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2085681.05
+        }
+      },
+      {
+        "threshold": 0.33421052631578946,
+        "precision": 0.972972972972973,
+        "recall": 0.8,
+        "f1": 0.8780487804878049,
+        "tp": 36,
+        "fp": 1,
+        "fn": 9,
+        "tn": 127,
+        "net_economic_benefit": 2082742.3599999999,
+        "routing": {
+          "allow": 134,
+          "review": 2,
+          "block": 37
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.972972972972973,
+          "recall": 0.8,
+          "f1": 0.8780487804878049,
+          "tp": 36,
+          "fp": 1,
+          "fn": 9,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 47692.08,
+          "fraud_loss_prevented": 2087742.3599999999,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2082742.3599999999
+        }
+      },
+      {
+        "threshold": 0.381578947368421,
+        "precision": 0.972972972972973,
+        "recall": 0.8,
+        "f1": 0.8780487804878049,
+        "tp": 36,
+        "fp": 1,
+        "fn": 9,
+        "tn": 127,
+        "net_economic_benefit": 2082742.3599999999,
+        "routing": {
+          "allow": 134,
+          "review": 2,
+          "block": 37
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.972972972972973,
+          "recall": 0.8,
+          "f1": 0.8780487804878049,
+          "tp": 36,
+          "fp": 1,
+          "fn": 9,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 47692.08,
+          "fraud_loss_prevented": 2087742.3599999999,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2082742.3599999999
+        }
+      },
+      {
+        "threshold": 0.4289473684210526,
+        "precision": 0.972972972972973,
+        "recall": 0.8,
+        "f1": 0.8780487804878049,
+        "tp": 36,
+        "fp": 1,
+        "fn": 9,
+        "tn": 127,
+        "net_economic_benefit": 2082742.3599999999,
+        "routing": {
+          "allow": 134,
+          "review": 2,
+          "block": 37
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.972972972972973,
+          "recall": 0.8,
+          "f1": 0.8780487804878049,
+          "tp": 36,
+          "fp": 1,
+          "fn": 9,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 47692.08,
+          "fraud_loss_prevented": 2087742.3599999999,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2082742.3599999999
+        }
+      },
+      {
+        "threshold": 0.47631578947368414,
+        "precision": 0.972972972972973,
+        "recall": 0.8,
+        "f1": 0.8780487804878049,
+        "tp": 36,
+        "fp": 1,
+        "fn": 9,
+        "tn": 127,
+        "net_economic_benefit": 2082742.3599999999,
+        "routing": {
+          "allow": 134,
+          "review": 2,
+          "block": 37
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.972972972972973,
+          "recall": 0.8,
+          "f1": 0.8780487804878049,
+          "tp": 36,
+          "fp": 1,
+          "fn": 9,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 47692.08,
+          "fraud_loss_prevented": 2087742.3599999999,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2082742.3599999999
+        }
+      },
+      {
+        "threshold": 0.5236842105263158,
+        "precision": 0.9722222222222222,
+        "recall": 0.7777777777777778,
+        "f1": 0.8641975308641975,
+        "tp": 35,
+        "fp": 1,
+        "fn": 10,
+        "tn": 127,
+        "net_economic_benefit": 2080205.3699999999,
+        "routing": {
+          "allow": 134,
+          "review": 3,
+          "block": 36
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.9722222222222222,
+          "recall": 0.7777777777777778,
+          "f1": 0.8641975308641975,
+          "tp": 35,
+          "fp": 1,
+          "fn": 10,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 50229.07,
+          "fraud_loss_prevented": 2085205.3699999999,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2080205.3699999999
+        }
+      },
+      {
+        "threshold": 0.5710526315789474,
+        "precision": 0.9722222222222222,
+        "recall": 0.7777777777777778,
+        "f1": 0.8641975308641975,
+        "tp": 35,
+        "fp": 1,
+        "fn": 10,
+        "tn": 127,
+        "net_economic_benefit": 2080205.3699999999,
+        "routing": {
+          "allow": 134,
+          "review": 3,
+          "block": 36
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.9722222222222222,
+          "recall": 0.7777777777777778,
+          "f1": 0.8641975308641975,
+          "tp": 35,
+          "fp": 1,
+          "fn": 10,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 50229.07,
+          "fraud_loss_prevented": 2085205.3699999999,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2080205.3699999999
+        }
+      },
+      {
+        "threshold": 0.618421052631579,
+        "precision": 0.9722222222222222,
+        "recall": 0.7777777777777778,
+        "f1": 0.8641975308641975,
+        "tp": 35,
+        "fp": 1,
+        "fn": 10,
+        "tn": 127,
+        "net_economic_benefit": 2080205.3699999999,
+        "routing": {
+          "allow": 134,
+          "review": 3,
+          "block": 36
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.9722222222222222,
+          "recall": 0.7777777777777778,
+          "f1": 0.8641975308641975,
+          "tp": 35,
+          "fp": 1,
+          "fn": 10,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 50229.07,
+          "fraud_loss_prevented": 2085205.3699999999,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2080205.3699999999
+        }
+      },
+      {
+        "threshold": 0.6657894736842105,
+        "precision": 0.9722222222222222,
+        "recall": 0.7777777777777778,
+        "f1": 0.8641975308641975,
+        "tp": 35,
+        "fp": 1,
+        "fn": 10,
+        "tn": 127,
+        "net_economic_benefit": 2080205.3699999999,
+        "routing": {
+          "allow": 134,
+          "review": 3,
+          "block": 36
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.9722222222222222,
+          "recall": 0.7777777777777778,
+          "f1": 0.8641975308641975,
+          "tp": 35,
+          "fp": 1,
+          "fn": 10,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 50229.07,
+          "fraud_loss_prevented": 2085205.3699999999,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2080205.3699999999
+        }
+      },
+      {
+        "threshold": 0.7131578947368421,
+        "precision": 0.9714285714285714,
+        "recall": 0.7555555555555555,
+        "f1": 0.85,
+        "tp": 34,
+        "fp": 1,
+        "fn": 11,
+        "tn": 127,
+        "net_economic_benefit": 2075675.98,
+        "routing": {
+          "allow": 134,
+          "review": 4,
+          "block": 35
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.9714285714285714,
+          "recall": 0.7555555555555555,
+          "f1": 0.85,
+          "tp": 34,
+          "fp": 1,
+          "fn": 11,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 54758.46000000001,
+          "fraud_loss_prevented": 2080675.98,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2075675.98
+        }
+      },
+      {
+        "threshold": 0.7605263157894736,
+        "precision": 0.9714285714285714,
+        "recall": 0.7555555555555555,
+        "f1": 0.85,
+        "tp": 34,
+        "fp": 1,
+        "fn": 11,
+        "tn": 127,
+        "net_economic_benefit": 2075675.98,
+        "routing": {
+          "allow": 134,
+          "review": 4,
+          "block": 35
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.9714285714285714,
+          "recall": 0.7555555555555555,
+          "f1": 0.85,
+          "tp": 34,
+          "fp": 1,
+          "fn": 11,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 54758.46000000001,
+          "fraud_loss_prevented": 2080675.98,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2075675.98
+        }
+      },
+      {
+        "threshold": 0.8078947368421052,
+        "precision": 0.9705882352941176,
+        "recall": 0.7333333333333333,
+        "f1": 0.8354430379746836,
+        "tp": 33,
+        "fp": 1,
+        "fn": 12,
+        "tn": 127,
+        "net_economic_benefit": 2071503.72,
+        "routing": {
+          "allow": 134,
+          "review": 5,
+          "block": 34
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.9705882352941176,
+          "recall": 0.7333333333333333,
+          "f1": 0.8354430379746836,
+          "tp": 33,
+          "fp": 1,
+          "fn": 12,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 58930.72,
+          "fraud_loss_prevented": 2076503.72,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2071503.72
+        }
+      },
+      {
+        "threshold": 0.8552631578947368,
+        "precision": 0.9705882352941176,
+        "recall": 0.7333333333333333,
+        "f1": 0.8354430379746836,
+        "tp": 33,
+        "fp": 1,
+        "fn": 12,
+        "tn": 127,
+        "net_economic_benefit": 2071503.72,
+        "routing": {
+          "allow": 134,
+          "review": 5,
+          "block": 34
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.9705882352941176,
+          "recall": 0.7333333333333333,
+          "f1": 0.8354430379746836,
+          "tp": 33,
+          "fp": 1,
+          "fn": 12,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 58930.72,
+          "fraud_loss_prevented": 2076503.72,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2071503.72
+        }
+      },
+      {
+        "threshold": 0.9026315789473683,
+        "precision": 0.96875,
+        "recall": 0.6888888888888889,
+        "f1": 0.8051948051948052,
+        "tp": 31,
+        "fp": 1,
+        "fn": 14,
+        "tn": 127,
+        "net_economic_benefit": 2059586.92,
+        "routing": {
+          "allow": 134,
+          "review": 7,
+          "block": 32
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.96875,
+          "recall": 0.6888888888888889,
+          "f1": 0.8051948051948052,
+          "tp": 31,
+          "fp": 1,
+          "fn": 14,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 70847.51999999999,
+          "fraud_loss_prevented": 2064586.92,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2059586.92
+        }
+      },
+      {
+        "threshold": 0.95,
+        "precision": 0.9655172413793104,
+        "recall": 0.6222222222222222,
+        "f1": 0.7567567567567568,
+        "tp": 28,
+        "fp": 1,
+        "fn": 17,
+        "tn": 127,
+        "net_economic_benefit": 2041659.3399999999,
+        "routing": {
+          "allow": 134,
+          "review": 10,
+          "block": 29
+        },
+        "classification": {
+          "basis": "BLOCK vs NOT-BLOCK",
+          "precision": 0.9655172413793104,
+          "recall": 0.6222222222222222,
+          "f1": 0.7567567567567568,
+          "tp": 28,
+          "fp": 1,
+          "fn": 17,
+          "tn": 127
+        },
+        "economics": {
+          "baseline_fraud_loss": 2135434.44,
+          "residual_fraud_loss": 88775.1,
+          "fraud_loss_prevented": 2046659.3399999999,
+          "false_positive_cost": 5000.0,
+          "net_economic_benefit": 2041659.3399999999
+        }
+      }
+    ]
   },
   "selected_thresholds": {
     "review_threshold": 0.2,
@@ -132,7 +794,775 @@
         "count": 11,
         "recall": 0.9090909090909091
       }
-    }
+    },
+    "pr_curve": [
+      {
+        "precision": 0.3055555555555556,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.30726256983240224,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3089887640449438,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3107344632768362,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3125,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3142857142857143,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3160919540229885,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3179190751445087,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.31976744186046513,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3216374269005848,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3235294117647059,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3254437869822485,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3273809523809524,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.32934131736526945,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3313253012048193,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3333333333333333,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3353658536585366,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3374233128834356,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3395061728395062,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3416149068322981,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.34375,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.34591194968553457,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.34810126582278483,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3503184713375796,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3525641025641026,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3548387096774194,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.35714285714285715,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.35947712418300654,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3618421052631579,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.36423841059602646,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.36666666666666664,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3691275167785235,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3716216216216216,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3741496598639456,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3767123287671233,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3793103448275862,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3819444444444444,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.38461538461538464,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3873239436619718,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.3900709219858156,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.39285714285714285,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.39568345323741005,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.39855072463768115,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.40145985401459855,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.40441176470588236,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4074074074074074,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.41044776119402987,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.41353383458646614,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4166666666666667,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4198473282442748,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4230769230769231,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4263565891472868,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4296875,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4330708661417323,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4365079365079365,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.44,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4435483870967742,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.44715447154471544,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.45081967213114754,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.45454545454545453,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4583333333333333,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.46218487394957986,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4661016949152542,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4700854700854701,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.47413793103448276,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4782608695652174,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4824561403508772,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.48672566371681414,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.49107142857142855,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.4954954954954955,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5045871559633027,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5092592592592593,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.514018691588785,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5188679245283019,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5238095238095238,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5288461538461539,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5339805825242718,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5392156862745098,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5445544554455446,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.55,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5555555555555556,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5612244897959183,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5670103092783505,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5729166666666666,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5789473684210527,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5851063829787234,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5913978494623656,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.5978260869565217,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.6043956043956044,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.6111111111111112,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.6179775280898876,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.625,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.632183908045977,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.6395348837209303,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.6470588235294118,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.6547619047619048,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.6626506024096386,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.6707317073170732,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.6790123456790124,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.6875,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.6962025316455697,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.7051282051282052,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.7142857142857143,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.7236842105263158,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.7333333333333333,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.7432432432432432,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.7534246575342466,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.7638888888888888,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.7746478873239436,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.7857142857142857,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.7971014492753623,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.8088235294117647,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.8208955223880597,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.8333333333333334,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.8461538461538461,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.859375,
+        "recall": 1.0
+      },
+      {
+        "precision": 0.8571428571428571,
+        "recall": 0.9818181818181818
+      },
+      {
+        "precision": 0.8709677419354839,
+        "recall": 0.9818181818181818
+      },
+      {
+        "precision": 0.8852459016393442,
+        "recall": 0.9818181818181818
+      },
+      {
+        "precision": 0.9,
+        "recall": 0.9818181818181818
+      },
+      {
+        "precision": 0.9152542372881356,
+        "recall": 0.9818181818181818
+      },
+      {
+        "precision": 0.9310344827586207,
+        "recall": 0.9818181818181818
+      },
+      {
+        "precision": 0.9473684210526315,
+        "recall": 0.9818181818181818
+      },
+      {
+        "precision": 0.9464285714285714,
+        "recall": 0.9636363636363636
+      },
+      {
+        "precision": 0.9636363636363636,
+        "recall": 0.9636363636363636
+      },
+      {
+        "precision": 0.9814814814814815,
+        "recall": 0.9636363636363636
+      },
+      {
+        "precision": 0.9811320754716981,
+        "recall": 0.9454545454545454
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.9454545454545454
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.9272727272727272
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.9090909090909091
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.8909090909090909
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.8727272727272727
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.8545454545454545
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.8363636363636363
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.8181818181818182
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.8
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.7818181818181819
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.7636363636363637
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.7454545454545455
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.7272727272727273
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.7090909090909091
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.6909090909090909
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.6727272727272727
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.6545454545454545
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.6363636363636364
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.6181818181818182
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.6
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.5818181818181818
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.5636363636363636
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.5454545454545454
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.5272727272727272
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.509090909090909
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.4909090909090909
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.4727272727272727
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.45454545454545453
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.43636363636363634
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.41818181818181815
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.4
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.38181818181818183
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.36363636363636365
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.34545454545454546
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.32727272727272727
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.3090909090909091
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.2909090909090909
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.2727272727272727
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.2545454545454545
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.23636363636363636
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.21818181818181817
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.2
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.18181818181818182
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.16363636363636364
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.14545454545454545
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.12727272727272726
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.10909090909090909
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.09090909090909091
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.07272727272727272
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.05454545454545454
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.03636363636363636
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.01818181818181818
+      },
+      {
+        "precision": 1.0,
+        "recall": 0.0
+      }
+    ],
+    "roc_curve": [
+      {
+        "fpr": 0.0,
+        "tpr": 0.0
+      },
+      {
+        "fpr": 0.0,
+        "tpr": 0.01818181818181818
+      },
+      {
+        "fpr": 0.0,
+        "tpr": 0.9454545454545454
+      },
+      {
+        "fpr": 0.008,
+        "tpr": 0.9454545454545454
+      },
+      {
+        "fpr": 0.008,
+        "tpr": 0.9636363636363636
+      },
+      {
+        "fpr": 0.024,
+        "tpr": 0.9636363636363636
+      },
+      {
+        "fpr": 0.024,
+        "tpr": 0.9818181818181818
+      },
+      {
+        "fpr": 0.072,
+        "tpr": 0.9818181818181818
+      },
+      {
+        "fpr": 0.072,
+        "tpr": 1.0
+      },
+      {
+        "fpr": 1.0,
+        "tpr": 1.0
+      }
+    ]
   },
   "economic_assumptions": {
     "chargeback_fee": 1500,

@@ -1,6 +1,5 @@
 from pydantic import BaseModel
-from typing import List
-from typing import Dict, Any, Optional
+from typing import List, Any, Optional, Dict
 
 class SummaryResponse(BaseModel):
     total_transactions: int
@@ -31,3 +30,4 @@ class EconomicsResponse(BaseModel):
     block_threshold: float
     economic_assumptions: Dict[str, Any]
     final_test_economic_result: Dict[str, Any]
+    threshold_sweep: Optional[List[Dict[str, Any]]] = None

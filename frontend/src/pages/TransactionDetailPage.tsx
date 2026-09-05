@@ -19,6 +19,7 @@ export default function TransactionDetailPage() {
   const [investigation, setInvestigation] = useState<InvestigatorResponse | null>(null);
   const [investigating, setInvestigating] = useState(false);
   const [investigationError, setInvestigationError] = useState<string | null>(null);
+  const [animatedScore, setAnimatedScore] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,6 +35,14 @@ export default function TransactionDetailPage() {
     };
     fetchData();
   }, [id]);
+
+  useEffect(() => {
+    if (txn) {
+      setAnimatedScore(0);
+      const timer = setTimeout(() => setAnimatedScore(txn.risk_score), 100);
+      return () => clearTimeout(timer);
+    }
+  }, [txn]);
 
   const handleInvestigate = async () => {
     if (!id) return;
@@ -55,7 +64,11 @@ export default function TransactionDetailPage() {
   const riskColor = txn.decision === 'BLOCK' ? 'bg-rose-500' : txn.decision === 'REVIEW' ? 'bg-amber-500' : 'bg-emerald-500';
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
+      <style>{`
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+      `}</style>
       <Link to="/transactions" className="inline-flex items-center text-sm text-slate-400 hover:text-emerald-400">
         <ArrowLeft size={16} className="mr-1" /> Back to Risk Activity
       </Link>
@@ -80,11 +93,17 @@ export default function TransactionDetailPage() {
         <div className="flex items-center justify-between mb-2">
           <h3 className="text-sm font-semibold text-slate-400 uppercase">Risk Level</h3>
         </div>
-        <div className="h-4 w-full rounded-full bg-slate-700 overflow-hidden">
+        <div className="h-4 w-full rounded-full bg-slate-700 overflow-hidden relative">
           <div
-            className={`h-4 rounded-full ${riskColor}`}
-            style={{ width: `${txn.risk_score}%` }}
+            className={`h-4 rounded-full ${riskColor} transition-all duration-1000 ease-out`}
+            style={{ width: `${animatedScore}%` }}
           />
+        </div>
+        <div className="flex justify-between text-xs text-slate-500 mt-1">
+          <span>0</span>
+          <span className="text-amber-400">REVIEW (20)</span>
+          <span className="text-rose-400">BLOCK (50)</span>
+          <span>100</span>
         </div>
       </Card>
 
@@ -102,7 +121,7 @@ export default function TransactionDetailPage() {
         </Card>
 
         <Card className="bg-slate-900/50 border-amber-500/30">
-          <h3 className="text-sm font-semibold text-amber-400 mb-4 uppercase flex items-center gap-2"><ShieldAlert size={16} /> Why was this flagged?</h3>
+          <h3 className="text-sm font-semibold text-amber-400 mb-4 uppercase flex items-center gap-2"><ShieldAlert size={16} /> Risk Evidence</h3>
           <ReasonCodeList reasons={txn.reasons} />
         </Card>
       </div>
@@ -196,11 +215,15 @@ export default function TransactionDetailPage() {
           </div>
           <div className="bg-slate-900 p-3 rounded-lg">
             <p className="text-slate-500 text-xs">Hist. Avg Amount</p>
-            <p className="text-slate-200 font-medium mt-1">{formatCurrency(txn.historical_avg_amount)}</p>
+            <p className="text-slate-200 font-medium mt-1">
+              {txn.historical_avg_amount !== null ? formatCurrency(txn.historical_avg_amount) : 'No historical baseline available'}
+            </p>
           </div>
           <div className="bg-slate-900 p-3 rounded-lg">
             <p className="text-slate-500 text-xs">Amount Ratio</p>
-            <p className="text-slate-200 font-medium mt-1">{txn.amount_ratio_to_history ? `${txn.amount_ratio_to_history.toFixed(2)}x` : 'N/A'}</p>
+            <p className="text-slate-200 font-medium mt-1">
+              {txn.amount_ratio_to_history !== null ? `${txn.amount_ratio_to_history.toFixed(2)}x` : 'No historical baseline available'}
+            </p>
           </div>
           <div className="bg-slate-900 p-3 rounded-lg">
             <p className="text-slate-500 text-xs">Device User Count</p>
@@ -218,7 +241,9 @@ export default function TransactionDetailPage() {
             <MapPin size={14} className="text-slate-500 mt-1" />
             <div>
               <p className="text-slate-500 text-xs">Geo Velocity</p>
-              <p className="text-slate-200 font-medium mt-1">{txn.geographic_velocity ? `${txn.geographic_velocity.toFixed(0)} km/h` : 'N/A'}</p>
+              <p className="text-slate-200 font-medium mt-1">
+                {txn.geographic_velocity !== null ? `${txn.geographic_velocity.toFixed(0)} km/h` : 'No historical baseline available'}
+              </p>
             </div>
           </div>
         </div>

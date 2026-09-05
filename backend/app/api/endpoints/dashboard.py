@@ -1,4 +1,4 @@
-﻿from fastapi import APIRouter
+from fastapi import APIRouter
 import json
 from pathlib import Path
 from backend.app.core.config import EVALUATION_REPORT_PATH, THRESHOLD_CONFIG_PATH
@@ -16,7 +16,7 @@ async def summary():
     test_metrics = report['test_results']['metrics']
     test_econ = report['test_results']['economics']
     routing = report['test_results']['routing']
-    
+
     return SummaryResponse(
         total_transactions=report['dataset']['total_rows'],
         fraud_detected=test_metrics['tp'],
@@ -42,10 +42,14 @@ async def economics():
     report = load_report()
     with open(THRESHOLD_CONFIG_PATH, 'r') as f:
         thresholds = json.load(f)
-        
+
+    # Extract threshold sweep from validation_results
+    threshold_sweep = report.get('validation_results', {}).get('threshold_sweep')
+
     return EconomicsResponse(
         review_threshold=thresholds['review_threshold'],
         block_threshold=thresholds['block_threshold'],
         economic_assumptions=report['economic_assumptions'],
-        final_test_economic_result=report['test_results']['economics']
+        final_test_economic_result=report['test_results']['economics'],
+        threshold_sweep=threshold_sweep
     )

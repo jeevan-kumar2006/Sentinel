@@ -29,8 +29,10 @@ def generate_reasons(features: Dict[str, Any]) -> List[ReasonCode]:
     if get_val('geographic_velocity') > 1000:
         reasons.append(ReasonCode(code="GEO_ANOMALY", detail=f"Impossible travel speed ({get_val('geographic_velocity'):.0f} km/h)"))
         
-    if get_val('is_first_transaction') == 1.0 or features.get('is_first_transaction') == True:
-        reasons.append(ReasonCode(code="COLD_START", detail="First transaction for this user"))
+    # COLD_START is contextual, not a risk-driving reason.
+    # It is handled by the Investigator, not the Risk Evidence list.
+    # if get_val('is_first_transaction') == 1.0 or features.get('is_first_transaction') == True:
+    #     reasons.append(ReasonCode(code="COLD_START", detail="First transaction for this user"))
         
     if get_val('failed_attempt_velocity') > 2:
         reasons.append(ReasonCode(code="HIGH_FAILED_ATTEMPTS", detail=f"{int(get_val('failed_attempt_velocity'))} failed attempts recently"))

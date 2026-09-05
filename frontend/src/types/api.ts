@@ -25,7 +25,14 @@ export interface EvaluationResponse {
   dataset: Record<string, any>;
   splits: Record<string, any>;
   features_used: string[];
-  validation_results: Record<string, any>;
+  validation_results: Record<string, any> & {
+    threshold_sweep?: {
+      threshold: number;
+      precision: number;
+      recall: number;
+      net_economic_benefit: number;
+    }[];
+  };
   selected_thresholds: Record<string, any>;
   test_results: {
     metrics: {
@@ -42,6 +49,8 @@ export interface EvaluationResponse {
     routing: Record<string, number>;
     economics: Record<string, number>;
     scenario_recall: Record<string, { count: number; recall: number }>;
+    pr_curve?: { precision: number; recall: number }[];
+    roc_curve?: { fpr: number; tpr: number }[];
   };
   economic_assumptions: Record<string, any>;
 }
@@ -51,6 +60,13 @@ export interface EconomicsResponse {
   block_threshold: number;
   economic_assumptions: Record<string, any>;
   final_test_economic_result: Record<string, number>;
+  threshold_sweep?: {
+    threshold: number;
+    precision: number;
+    recall: number;
+    f1: number;
+    net_economic_benefit: number;
+  }[];
 }
 
 export interface TransactionBase {
