@@ -30,12 +30,20 @@ export default function EconomicsPage() {
   const econ = data?.final_test_economic_result ?? {};
   const assumptions = data?.economic_assumptions ?? {};
   
-  // Safely map threshold sweep to prevent Recharts crashes on nested objects
-  const sweepData = (data?.threshold_sweep ?? []).map((s: any) => ({
-    threshold: s.threshold ?? 0,
-    net_economic_benefit: s.net_economic_benefit ?? 0,
-    recall: s.recall ?? 0
-  }));
+  const sweepData = (Array.isArray(data.threshold_sweep) ? data.threshold_sweep : [])
+    .filter((point): point is NonNullable<typeof point> => (
+      point !== null && typeof point === 'object'
+    ))
+    .map((point) => ({
+      threshold: point.threshold,
+      net_economic_benefit: point.net_economic_benefit,
+      recall: point.recall,
+    }))
+    .filter((point) => (
+      Number.isFinite(point.threshold) &&
+      Number.isFinite(point.net_economic_benefit) &&
+      Number.isFinite(point.recall)
+    ));
 
   return (
     <div className="space-y-6">
@@ -113,7 +121,7 @@ export default function EconomicsPage() {
                 <YAxis yAxisId="right" orientation="right" domain={[0, 1]} stroke="#f59e0b" label={{ value: 'Recall', angle: 90, position: 'insideRight', fill: '#f59e0b' }} />
                 <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #334155' }} />
                 <Legend />
-                <ReferenceLine x={data?.block_threshold ?? 0} stroke="#f43f5e" strokeDasharray="5 5" label={{ value: 'Selected Block Threshold', fill: '#f43f5e', position: 'top' }} />
+                <ReferenceLine x={data?.block_threshold ?? 0} yAxisId="left" stroke="#f43f5e" strokeDasharray="5 5" label={{ value: 'Selected Block Threshold', fill: '#f43f5e', position: 'top' }} />
                 <Line yAxisId="left" type="monotone" dataKey="net_economic_benefit" stroke="#10b981" dot={false} strokeWidth={2} name="Net Economic Benefit" />
                 <Line yAxisId="right" type="monotone" dataKey="recall" stroke="#f59e0b" dot={false} strokeWidth={2} name="Recall" />
               </LineChart>

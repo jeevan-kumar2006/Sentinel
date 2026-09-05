@@ -4,10 +4,13 @@ Investigator API endpoint.
 POST /api/v1/investigator/{transaction_id}
 """
 from fastapi import APIRouter, HTTPException
-from backend.app.schemas.investigator import InvestigatorResponse, KeySignal
+from backend.app.schemas.investigator import InvestigatorResponse
 from backend.app.services.transaction_service import transaction_service
 from backend.app.services.evidence_service import EvidenceBuilder
-from backend.app.services.investigator_service import get_investigator_provider
+from backend.app.services.investigator_service import (
+    MockInvestigatorProvider,
+    get_investigator_provider,
+)
 from backend.app.services.reason_service import generate_reasons
 
 router = APIRouter()
@@ -53,6 +56,8 @@ async def investigate_transaction(transaction_id: str):
             limitations=investigation.limitations
         )
     else:
+        deterministic = await MockInvestigatorProvider().investigate(evidence)
+        deterministic_signals = deterministic.key_signals if deterministic else []
         return InvestigatorResponse(
             transaction_id=transaction_id,
             available=False,
@@ -60,17 +65,11 @@ async def investigate_transaction(transaction_id: str):
             risk_score=risk_score,
             risk_probability=risk_probability,
             summary="AI explanation is temporarily unavailable. Sentinel's authoritative risk score and decision remain unchanged.",
-            key_signals=[
-                KeySignal(
-                    signal=reason.detail,
-                    evidence="Deterministic Sentinel reason code"
-                )
-                for reason in reasons
-            ],
+            key_signals=deterministic_signals,
             recommended_action=recommended_action,
             explanation_confidence="not_available",
             limitations=[
-                "LLM explanation unavailable. Deterministic Sentinel reason codes are shown."
+                "LLM explanation unavailable. Deterministic evidence is shown; unavailable values are not inferred."
             ]
         )
 

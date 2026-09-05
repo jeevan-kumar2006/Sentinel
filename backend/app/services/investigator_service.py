@@ -4,6 +4,7 @@ Implements the LLM integration for transaction investigation.
 """
 import os
 import json
+import asyncio
 from typing import Any, Dict, Optional
 from abc import ABC, abstractmethod
 from backend.app.schemas.investigator import AIInvestigation, KeySignal
@@ -82,7 +83,7 @@ class MockInvestigatorProvider(InvestigatorProvider):
                     )
                 )
 
-            geo_velocity = features.get("geo_velocity")
+            geo_velocity = features.get("geographic_velocity", features.get("geo_velocity"))
             if geo_velocity is not None and geo_velocity > 800:
                 key_signals.append(
                     KeySignal(
@@ -186,10 +187,11 @@ Return only the requested structured explanation."""
                 response_schema=AIInvestigation
             )
 
-            response = self.client.models.generate_content(
-                model="gemini-1.5-flash",
+            response = await asyncio.to_thread(
+                self.client.models.generate_content,
+                model="gemini-2.5-flash-lite",
                 contents=user_prompt,
-                config=config
+                config=config,
             )
 
             if not response.text:
@@ -198,7 +200,10 @@ Return only the requested structured explanation."""
             response_data = json.loads(response.text)
             investigation = AIInvestigation(**response_data)
 
-            if self._is_contradictory(investigation, evidence):
+            if (
+                self._is_contradictory(investigation, evidence)
+                or not self._signals_are_grounded(investigation, evidence)
+            ):
                 return None
 
             return investigation
@@ -216,6 +221,31 @@ Return only the requested structured explanation."""
         if decision == "ALLOW":
             if any(p in text_to_check for p in ["should be blocked", "clearly fraudulent", "reject this"]): return True
         return False
+
+    @staticmethod
+    def _signals_are_grounded(investigation: AIInvestigation, evidence: Dict[str, Any]) -> bool:
+        """Reject model-added signals unless they cite an exact supplied value."""
+        evidence_values = {
+            str(value).lower()
+            for value in GeminiInvestigatorProvider._iter_evidence_values(evidence)
+            if value is not None
+        }
+        for signal in investigation.key_signals:
+            signal_text = f"{signal.signal} {signal.evidence}".lower()
+            if not any(value and value in signal_text for value in evidence_values):
+                return False
+        return True
+
+    @staticmethod
+    def _iter_evidence_values(value: Any):
+        if isinstance(value, dict):
+            for nested in value.values():
+                yield from GeminiInvestigatorProvider._iter_evidence_values(nested)
+        elif isinstance(value, list):
+            for nested in value:
+                yield from GeminiInvestigatorProvider._iter_evidence_values(nested)
+        else:
+            yield value
 
 
 def get_investigator_provider() -> InvestigatorProvider:

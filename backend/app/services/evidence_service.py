@@ -40,7 +40,7 @@ class EvidenceBuilder:
         ip_count = EvidenceBuilder._safe_int(transaction.get("ip_user_count"))
         if ip_count is not None: features["ip_user_count"] = ip_count
         geo_velocity = EvidenceBuilder._safe_float(transaction.get("geographic_velocity"))
-        if geo_velocity is not None: features["geo_velocity"] = geo_velocity
+        if geo_velocity is not None: features["geographic_velocity"] = geo_velocity
 
         failed_attempts = EvidenceBuilder._safe_int(transaction.get("failed_attempt_velocity"))
         if failed_attempts is not None: features["failed_attempt_velocity"] = failed_attempts

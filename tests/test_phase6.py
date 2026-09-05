@@ -11,6 +11,7 @@ import logging
 from unittest.mock import patch, MagicMock, AsyncMock
 from fastapi.testclient import TestClient
 from backend.app.main import app
+from backend.app.schemas.investigator import AIInvestigation, KeySignal
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -102,6 +103,44 @@ class TestPhase6Hardening:
                 
             # Should gracefully fallback to None on timeout
             assert investigation is None
+
+    def test_missing_gemini_key_uses_safe_provider(self):
+        from backend.app.services.investigator_service import MockInvestigatorProvider
+
+        with patch.dict(os.environ, {}, clear=True):
+            provider = __import__(
+                'backend.app.services.investigator_service',
+                fromlist=['get_investigator_provider'],
+            ).get_investigator_provider()
+        assert isinstance(provider, MockInvestigatorProvider)
+
+    def test_gemini_rejects_unverified_signals(self):
+        from backend.app.services.investigator_service import GeminiInvestigatorProvider
+
+        investigation = AIInvestigation(
+            summary="verified",
+            key_signals=[KeySignal(signal="Invented", evidence="unknown behavior")],
+            explanation_confidence="high",
+            limitations=[],
+        )
+        assert GeminiInvestigatorProvider._signals_are_grounded(
+            investigation,
+            {"features": {"transaction_velocity_5m": 0}},
+        ) is False
+
+    def test_gemini_cannot_change_sentinel_decision(self, client):
+        txn = client.get("/api/v1/transactions?page=1&limit=1").json()["items"][0]
+        tampered = AIInvestigation(
+            summary="The transaction should be blocked.",
+            key_signals=[],
+            explanation_confidence="high",
+            limitations=[],
+        )
+        with patch('backend.app.api.endpoints.investigator.get_investigator_provider') as mock_provider:
+            mock_provider.return_value.investigate = AsyncMock(return_value=tampered)
+            response = client.post(f"/api/v1/investigator/{txn['transaction_id']}")
+        assert response.json()["decision"] == txn["decision"]
+        assert response.json()["recommended_action"] != "The transaction should be blocked."
 
     def test_no_ground_truth_in_investigator_evidence(self, client):
         """Verify malicious/internal fields never leak into evidence."""
